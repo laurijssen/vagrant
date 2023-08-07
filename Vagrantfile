@@ -6,26 +6,27 @@ Vagrant.configure(2) do |config|
 	
 	config.vm.define :node1 do |node1_config|
 		node1_config.vm.host_name = "node1"
-		node1_config.vm.boot_timeout = 600
 		node1_config.vm.network "private_network", ip:"172.17.8.104"
-		config.vm.network "forwarded_port", guest: 5000, host: 8080
+		#config.vm.network "forwarded_port", guest: 5000, host: 8080
 		node1_config.vm.provider :virtualbox do |vb|
 			vb.customize ["modifyvm", :id, "--memory", "2024"]
-			vb.customize ["modifyvm", :id, "--cpus", "2"]
-			vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+			vb.customize ["modifyvm", :id, "--cpus", "1"]
+			vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
+			#vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
 		end
-		node1_config.vm.provision "shell", path: "scripts/tools.sh"
+		#node1_config.vm.provision "shell", path: "scripts/tools.sh"
 	end
 	
-	#config.vm.define :node2 do |node2_config|
-		#node2_config.vm.host_name = "node2"
-		#node2_config.vm.network "private_network", ip:"172.17.8.105"
-		#node2_config.vm.provider :virtualbox do |vb|
-			#vb.customize ["modifyvm", :id, "--memory", "2024"]
-			#vb.customize ["modifyvm", :id, "--cpus", "1"]
+	config.vm.define :node2 do |node2_config|
+		node2_config.vm.host_name = "node2"
+		node2_config.vm.network "private_network", ip:"172.17.8.105"
+		node2_config.vm.provider :virtualbox do |vb|
+			vb.customize ["modifyvm", :id, "--memory", "2024"]
+			vb.customize ["modifyvm", :id, "--cpus", "1"]
+			vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
 			#vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-		#end
+		end
 		#node2_config.vm.provision "shell", path: "scripts/tools.sh"
-	#end
+	end
 	
 end
